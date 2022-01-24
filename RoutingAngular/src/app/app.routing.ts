@@ -19,13 +19,13 @@ import { UsersComponent } from './users/users/users.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: '', 
         component: LoginComponent
     },{
         path: 'home',
         component: HomeComponent
     },
-    { path: 'servers',canActivateChild:[AuthGuard], component: ServersComponent, children: [
+    { path: 'servers', canActivate:[AuthGuard], canActivateChild:[AuthGuard], component: ServersComponent, children: [
        	
         { path: ':id/edit', component: EditServerComponent,
          canDeactivate: [CanDeactivateGuard],resolve: { server: ServerResolver } },

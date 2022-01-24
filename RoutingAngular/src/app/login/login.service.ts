@@ -24,5 +24,18 @@ export class LoginService {
     //             return this.http.post( `${this.baseUrl}${url}` ,user)
     //         }
 
-    
+    comprobarToken():boolean{
+
+        let token = localStorage.getItem('token');
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          })
+        let url = "/comprobarToken"
+        // HAY QUE PASARLE EL TOKEN A TRAVES DEL HEADER
+        this.http.get(`${this.baseUrl}${url}`, {headers:headers})
+
+        return false;
+        
+    }
 }
