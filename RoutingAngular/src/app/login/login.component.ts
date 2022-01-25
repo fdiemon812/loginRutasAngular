@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.ls.loginService(user).subscribe(data=>{
-    localStorage.setItem('token', JSON.stringify(data))
+    localStorage.setItem('token', JSON.stringify(data.access_token))
       console.log(data);
     });
 

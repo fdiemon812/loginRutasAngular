@@ -13,7 +13,9 @@ export class AuthGuard implements CanActivate {
 
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-return false; 
+    this.lg.comprobarToken();
+
+  return true; 
 }
 
 canActivateChild(route: ActivatedRouteSnapshot, 
