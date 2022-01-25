@@ -3,7 +3,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
-@Injectable()
+@Injectable({
+    providedIn:"root"}
+)
 export class LoginService {
     
     baseUrl: string = environment.baseUrl;
@@ -11,6 +13,9 @@ export class LoginService {
 
     ngOnInit(): void {
     }
+
+
+    estado:boolean=false;
 
     loginService(user:any):Observable<any>{
 // Para levantar server hay que ejecutar comando npm run start-auth
@@ -54,32 +59,44 @@ export class LoginService {
 
      comprobarToken():boolean{
         
-        let token:any="";
-        let tokenParseado:any="";
-        token = localStorage.getItem('token');
-        tokenParseado= JSON.parse(token);
+       
        
         let respuesta = false;
         const url = `${this.baseUrl}/comprobarToken`
 
-        console.log(this.http.get(url, { headers: new HttpHeaders({'Authorization': 'Bearer ' + tokenParseado})}))
-        this.http.get(url, { headers: new HttpHeaders({'Authorization': 'Bearer ' + tokenParseado})}).subscribe( data => {
+        this.http.get(url, { headers: new HttpHeaders({'Authorization': 'Bearer ' + this.getToken()})}).subscribe( data => {
          
             //No consigo sacar data.estado si no lo hago de esta forma.
-            Object.values(data)[0]
 
          if(Object.values(data)[0] == true){
              console.log("entra ")
              respuesta=true;
+             this.estado=true;
              console.log("deberia estar cambiado")
              
          }
         })
         console.log("la respuesta es "+respuesta)
+        
+        
         return respuesta;
       }
 
      
-      
+      getToken():string{
+          if(localStorage.getItem('token')!=null){
+              
+              let token:any="";
+              let tokenParseado:any="";
+              token = localStorage.getItem('token');
+              tokenParseado= JSON.parse(token);
+              
+              return tokenParseado
+
+          }else{
+
+              return "";
+          }
+      }
 
 }
